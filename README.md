@@ -13,4 +13,4 @@ NOTE: Some of the installers that are downloaded are not silent, you are suppose
 to their default location. If you install MinGW to a different place than C:\MinGW you will need to edit
 buildMesa.py as well.
 
-Have fun with the scripts and I hope it makes your life easier!
+Have fun with the scripts and I hope they make your life easier!
