@@ -31,9 +31,8 @@ sconsVersion = "2.3.4"
 llvmVersion  = "3.6.1"
 mesaVersion  = "10.6.0"
 
-useProxy = True
-httpProxy = 'http': 'proxy:8080'
-ftpProxy  = 'ftp' : 'http://proxy:8080' 
+useProxy = False
+proxyDict = { 'http': 'yourproxy:8080' , 'ftp' : 'http://yourproxy:8080' }
 
 # Make sure that you install MinGW to c:\MinGW or adjust this path:
 mingw       = r"C:\MinGW"
@@ -62,7 +61,7 @@ import shutil
 import zipfile
 
 if useProxy:
-  proxy_handler = urllib2.ProxyHandler( {httpProxy, ftpProxy } )
+  proxy_handler = urllib2.ProxyHandler( proxyDict )
   opener = urllib2.build_opener(proxy_handler)
   urllib2.install_opener(opener)
 
@@ -159,7 +158,6 @@ if not os.path.exists(mesaTar):
   downloadFile(mesaDownload, mesaTar)
   # alternative download with wget:
   #  subprocess.call([mingwBin + "/wget.exe","-e", "use_proxy=on", "-e", "ftp_proxy=http://tmg.mevis.lokal:8080", mesaDownload])
-if not os.path.exists(mesaDir):
   subprocess.call([sevenZip, "x", mesaTar])
   subprocess.call([sevenZip, "x", "mesa-" + mesaVersion + ".tar"])
 
