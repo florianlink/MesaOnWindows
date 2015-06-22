@@ -176,8 +176,8 @@ if not os.path.exists("LLVM"):
 
   print "building LLVM..."
   subprocess.call(["devenv.exe", "LLVM.sln", "/Build", llvmTarget, "/Project", "INSTALL"])
-  os.chdir("..")
-  os.chdir("..")
+
+os.chdir(curDir)
 
 ########################################################
 # Configure and build MESA
