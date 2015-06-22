@@ -32,7 +32,7 @@ llvmVersion  = "3.6.1"
 mesaVersion  = "10.6.0"
 
 useProxy = False
-proxyDict = { 'http': 'yourproxy:8080' , 'ftp' : 'http://yourproxy:8080' }
+proxyDict = { 'http': 'proxy:8080' , 'ftp' : 'http://proxy:8080' }
 
 # Make sure that you install MinGW to c:\MinGW or adjust this path:
 mingw       = r"C:\MinGW"
@@ -166,7 +166,7 @@ if not os.path.exists(mesaTar):
 if not os.path.exists("LLVM"):
   os.chdir(llvmDir)
   if os.path.exists("buildDir"):
-    shutils.rmtree("buildDir")
+    shutil.rmtree("buildDir")
   os.mkdir("buildDir")
   os.chdir("buildDir")
 
@@ -176,6 +176,7 @@ if not os.path.exists("LLVM"):
 
   print "building LLVM..."
   subprocess.call(["devenv.exe", "LLVM.sln", "/Build", llvmTarget, "/Project", "INSTALL"])
+  os.chdir("..")
   os.chdir("..")
 
 ########################################################
