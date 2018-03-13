@@ -25,11 +25,11 @@
 
 # Author: Florian Link (florianlink at google mail)
 
-cmakeVersionShort = "3.2"
-cmakeVersion = "3.2.3"
-sconsVersion = "2.3.4"
-llvmVersion  = "3.6.1"
-mesaVersion  = "10.6.0"
+cmakeVersionShort = "3.4"
+cmakeVersion = "3.4.3"
+sconsVersion = "2.3.6"
+llvmVersion  = "5.0.1"
+mesaVersion  = "17.3.5"
 
 useProxy = False
 proxyDict = { 'http': 'proxy:8080' , 'ftp' : 'http://proxy:8080' }
@@ -39,17 +39,17 @@ mingw       = r"C:\MinGW"
 
 # Tweak these if download urls change over time:
 zipDownload   = "http://www.7-zip.org/a/7za920.zip"
-cmakeDownload = "http://www.cmake.org/files/v" + cmakeVersionShort + "/cmake-" + cmakeVersion + "-win32-x86.zip"
+cmakeDownload = "https://cmake.org/files/v" + cmakeVersionShort + "/cmake-" + cmakeVersion + "-win32-x86.zip"
 llvmDownload  = "http://llvm.org/releases/" + llvmVersion + "/llvm-" + llvmVersion + ".src.tar.xz"
 xml2Download  = "http://xmlsoft.org/sources/win32/python/libxml2-python-2.7.7.win32-py2.7.exe"
 makoDownload  = "http://pypi.python.org/packages/source/M/Mako/Mako-1.0.1.tar.gz"
-sconsDownload = "http://cznic.dl.sourceforge.net/project/scons/scons/" + sconsVersion + "/scons-" + sconsVersion + ".zip"
+sconsDownload = "http://vorboss.dl.sourceforge.net/project/scons/scons/2.3.6/scons-" + sconsVersion + ".zip"
 mingwDownload = "http://heanet.dl.sourceforge.net/project/mingw/Installer/mingw-get-setup.exe"
-mesaDownload  = "ftp://ftp.freedesktop.org/pub/mesa/" + mesaVersion + "/mesa-" + mesaVersion + ".tar.xz"
+mesaDownload  = "ftp://ftp.freedesktop.org/pub/mesa/mesa-" + mesaVersion + ".tar.xz"
 
 # Tweak these to get 64bit/32bit or a different visual studio version
-cmakeVisualStudio = "Visual Studio 12 2013 Win64"
-sconsMSVC    = "MSVC_VERSION=12.0"
+cmakeVisualStudio = "Visual Studio 14 2015 Win64"
+sconsMSVC    = "MSVC_VERSION=14.0"
 sconsMachine = "machine=x86_64"
 llvmTarget   = "Release|x64"
 
@@ -77,7 +77,7 @@ def downloadFile(url, filename):
         if not blockData:
           break
         f.write(blockData)
-    os.rename(filename + ".tmp", filename)    
+    os.rename(filename + ".tmp", filename)
 
 pythonPath  = sys.exec_prefix
 python      = sys.executable
@@ -183,6 +183,9 @@ os.chdir(curDir)
 # Configure and build MESA
 os.chdir(mesaDir)
 env["LLVM"] = curDir + "/LLVM"
+
+# Note: tested SWR from intel by adding: "swr=1",
+# Requires env var: GALLIUM_DRIVER = swr when running the opengl32.dll
 
 subprocess.call([python, sconsScript, "build=release", sconsMachine, sconsMSVC, "llvm=yes", "libgl-gdi"], env = env)
 
